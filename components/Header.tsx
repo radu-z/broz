@@ -63,7 +63,7 @@ export default function Header() {
       <nav className="container">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
-          <Link href={getLocalizedPath('/')} className="flex items-center space-x-3">
+          <Link href={isEnglish ? '/en/' : '/'} className="flex items-center space-x-3">
             <div className="relative h-10 w-10">
               <Image
                 src="/logo-broz.png"
