@@ -37,6 +37,26 @@ export default function Header() {
     setMounted(true)
   }, [])
 
+  const getLocalizedPath = (targetLang: 'ro' | 'en') => {
+    // Check if current path matches any navigation item
+    const currentItem = navigation.find(item => 
+      isEnglish ? item.hrefEn === pathname : item.hrefRo === pathname
+    )
+    
+    if (currentItem) {
+      return targetLang === 'en' ? currentItem.hrefEn : currentItem.hrefRo
+    }
+    
+    // Fallback: try simple prefix replacement for dynamic pages
+    if (isEnglish && targetLang === 'ro') {
+      return pathname.replace(/^\/en/, '') || '/'
+    } else if (!isEnglish && targetLang === 'en') {
+      return pathname === '/' ? '/en/' : `/en${pathname}`
+    }
+    
+    return pathname
+  }
+
   const getNavLabel = (item: NavItem) => {
     return isEnglish ? item.labelEn : item.labelRo
   }
@@ -118,24 +138,22 @@ export default function Header() {
 
               {langMenuOpen && (
                 <div className="absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg py-1 z-50">
-                  {languages
-                    .filter(lang => lang.code !== currentLang)
-                    .map((lang) => {
-                      const newPath = isEnglish ? pathname.replace('/en', `/${lang.code}`) : (pathname === '/' ? `/${lang.code}/` : `/${lang.code}${pathname}`)
-                      // Ensure we don't double up slashes
-                      const normalizedPath = newPath.replace(/\/\//g, '/')
-                      return (
-                        <Link
-                          key={lang.code}
-                          href={normalizedPath}
-                          className="flex items-center space-x-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
-                          onClick={() => setLangMenuOpen(false)}
-                        >
-                          <span className="text-lg">{lang.flag}</span>
-                          <span>{lang.name}</span>
-                        </Link>
-                      )
-                    })}
+               {languages
+                 .filter(lang => lang.code !== currentLang)
+                 .map((lang) => {
+                   const newPath = getLocalizedPath(lang.code === 'en' ? 'en' : 'ro')
+                   return (
+                     <Link
+                       key={lang.code}
+                       href={newPath}
+                       className="flex items-center space-x-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
+                       onClick={() => setLangMenuOpen(false)}
+                     >
+                       <span className="text-lg">{lang.flag}</span>
+                       <span>{lang.name}</span>
+                     </Link>
+                   )
+                 })}
                 </div>
               )}
             </div>
@@ -173,25 +191,24 @@ export default function Header() {
                   {currentLang === 'ro' ? 'Limba / Language' : 'Language'}
                 </p>
                 <div className="flex space-x-2">
-                  {languages.map((lang) => {
-                    const newPath = isEnglish ? pathname.replace('/en', `/${lang.code}`) : (pathname === '/' ? `/${lang.code}/` : `/${lang.code}${pathname}`)
-                    const normalizedPath = newPath.replace(/\/\//g, '/')
-                    return (
-                      <Link
-                        key={lang.code}
-                        href={normalizedPath}
-                        className={`flex items-center space-x-1 px-3 py-2 rounded-md text-sm ${
-                          lang.code === currentLang
-                            ? 'bg-primary-50 text-primary-700'
-                            : 'text-gray-700 hover:bg-gray-50'
-                        }`}
-                        onClick={() => setLangMenuOpen(false)}
-                      >
-                        <span>{lang.flag}</span>
-                        <span>{lang.name}</span>
-                      </Link>
-                    )
-                  })}
+                 {languages.map((lang) => {
+                   const newPath = getLocalizedPath(lang.code === 'en' ? 'en' : 'ro')
+                   return (
+                     <Link
+                       key={lang.code}
+                       href={newPath}
+                       className={`flex items-center space-x-1 px-3 py-2 rounded-md text-sm ${
+                         lang.code === currentLang
+                           ? 'bg-primary-50 text-primary-700'
+                           : 'text-gray-700 hover:bg-gray-50'
+                       }`}
+                       onClick={() => setLangMenuOpen(false)}
+                     >
+                       <span>{lang.flag}</span>
+                       <span>{lang.name}</span>
+                     </Link>
+                   )
+                 })}
                 </div>
               </div>
               
