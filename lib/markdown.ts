@@ -15,19 +15,21 @@ export interface MarkdownData {
 
 const contentDirectory = path.join(process.cwd(), 'content')
 
-export function getMarkdownFiles(dir: string): string[] {
+export function getMarkdownFiles(dir: string = contentDirectory, lang?: string): string[] {
+  const searchDir = lang ? path.join(dir, lang) : dir
+  
   const files: string[] = []
   
-  if (!fs.existsSync(dir)) return files
+  if (!fs.existsSync(searchDir)) return files
   
-  const items = fs.readdirSync(dir)
+  const items = fs.readdirSync(searchDir)
   
   for (const item of items) {
-    const fullPath = path.join(dir, item)
+    const fullPath = path.join(searchDir, item)
     const stat = fs.statSync(fullPath)
     
     if (stat.isDirectory()) {
-      files.push(...getMarkdownFiles(fullPath))
+      files.push(...getMarkdownFiles(fullPath, undefined))
     } else if (item.endsWith('.md')) {
       files.push(fullPath)
     }
@@ -36,13 +38,24 @@ export function getMarkdownFiles(dir: string): string[] {
   return files
 }
 
-export function readMarkdownFile(filePath: string): MarkdownData | null {
+export function readMarkdownFile(filePath: string, lang?: string): MarkdownData | null {
   try {
     const fileContents = fs.readFileSync(filePath, 'utf8')
     const { data, content } = matter(fileContents)
     
-    const relativePath = path.relative(contentDirectory, filePath)
-    const slug = relativePath.replace(/\\/g, '/').replace(/\.md$/, '')
+    let relativePath = path.relative(contentDirectory, filePath)
+    // Normalize to forward slashes for Windows compatibility
+    relativePath = relativePath.replace(/\\/g, '/')
+    
+    // If reading from a language subdirectory, strip the lang prefix from slug
+    if (lang) {
+      const langPrefix = `${lang}/`
+      if (relativePath.startsWith(langPrefix)) {
+        relativePath = relativePath.slice(langPrefix.length)
+      }
+    }
+    
+    const slug = relativePath.replace(/\.md$/, '')
     
     return {
       ...data,
@@ -55,10 +68,10 @@ export function readMarkdownFile(filePath: string): MarkdownData | null {
   }
 }
 
-export async function getAllMarkdown(): Promise<MarkdownData[]> {
-  const files = getMarkdownFiles(contentDirectory)
+export async function getAllMarkdown(lang?: string): Promise<MarkdownData[]> {
+  const files = getMarkdownFiles(contentDirectory, lang)
   const markdownData = files
-    .map(readMarkdownFile)
+    .map(file => readMarkdownFile(file, lang))
     .filter((data): data is MarkdownData => data !== null)
   
   return markdownData.sort((a, b) => {
@@ -68,8 +81,8 @@ export async function getAllMarkdown(): Promise<MarkdownData[]> {
   })
 }
 
-export async function getMarkdownBySlug(slug: string): Promise<MarkdownData | null> {
-  const allData = await getAllMarkdown()
+export async function getMarkdownBySlug(slug: string, lang?: string): Promise<MarkdownData | null> {
+  const allData = await getAllMarkdown(lang)
   return allData.find(data => data.slug === slug) || null
 }
 

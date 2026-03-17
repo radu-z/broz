@@ -1,16 +1,33 @@
+'use client'
+
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
+
+interface ServiceItem {
+  id: string
+  labelRo: string
+  labelEn: string
+  href: string
+}
+
+interface NavItem {
+  id: string
+  labelRo: string
+  labelEn: string
+  href: string
+}
 
 const navigation = {
   servicii: [
-    { name: 'Reparații de Urgență', href: '/servicii/#urgenta' },
-    { name: 'Întreținere Preventivă', href: '/servicii/#intretinere' },
-    { name: 'Instalare și Înlocuire', href: '/servicii/#instalare' },
-    { name: 'Consultanță Tehnică', href: '/servicii/#consultanta' },
+    { id: 'emergency', labelRo: 'Reparații de Urgență', labelEn: 'Emergency Repairs', hrefRo: '/servicii/#urgenta', hrefEn: '/services/#urgenta' },
+    { id: 'maintenance', labelRo: 'Întreținere Preventivă', labelEn: 'Preventive Maintenance', hrefRo: '/servicii/#intretinere', hrefEn: '/services/#intretinere' },
+    { id: 'installation', labelRo: 'Instalare și Înlocuire', labelEn: 'Installation and Replacement', hrefRo: '/servicii/#instalare', hrefEn: '/services/#instalare' },
+    { id: 'consultation', labelRo: 'Consultanță Tehnică', labelEn: 'Technical Consultation', hrefRo: '/servicii/#consultanta', hrefEn: '/services/#consultanta' },
   ],
   companie: [
-    { name: 'Despre Noi', href: '/despre-noi/' },
-    { name: 'Servicii', href: '/servicii/' },
-    { name: 'Contact', href: '/contact/' },
+    { id: 'about', labelRo: 'Despre Noi', labelEn: 'About Us', hrefRo: '/despre-noi/', hrefEn: '/about/' },
+    { id: 'services', labelRo: 'Servicii', labelEn: 'Services', hrefRo: '/servicii/', hrefEn: '/services/' },
+    { id: 'contact', labelRo: 'Contact', labelEn: 'Contact', hrefRo: '/contact/', hrefEn: '/contact/' },
   ],
 }
 
@@ -22,6 +39,21 @@ const contactInfo = {
 }
 
 export default function Footer() {
+  const pathname = usePathname()
+  const isEnglish = pathname.startsWith('/en')
+  
+  const getLocalizedPath = (href: string) => {
+    if (href === '/') {
+      return isEnglish ? '/en/' : '/'
+    }
+    const normalizedHref = href.startsWith('/') ? href : `/${href}`
+    return isEnglish ? `/en${normalizedHref}` : normalizedHref
+  }
+
+  const getLabel = (item: { labelRo: string; labelEn: string }) => {
+    return isEnglish ? item.labelEn : item.labelRo
+  }
+
   return (
     <footer className="bg-secondary-900 text-white">
       <div className="container py-12">
@@ -42,15 +74,15 @@ export default function Footer() {
 
           {/* Services */}
           <div>
-            <h4 className="text-sm font-semibold mb-4">Servicii</h4>
+            <h4 className="text-sm font-semibold mb-4">{isEnglish ? 'Services' : 'Servicii'}</h4>
             <ul className="space-y-2">
               {navigation.servicii.map((item) => (
-                <li key={item.name}>
+                <li key={item.id}>
                   <Link
-                    href={item.href}
+                    href={isEnglish ? item.hrefEn : item.hrefRo}
                     className="text-secondary-300 hover:text-white text-sm transition-colors"
                   >
-                    {item.name}
+                    {getLabel(item)}
                   </Link>
                 </li>
               ))}
@@ -59,15 +91,15 @@ export default function Footer() {
 
           {/* Company */}
           <div>
-            <h4 className="text-sm font-semibold mb-4">Compania</h4>
+            <h4 className="text-sm font-semibold mb-4">{isEnglish ? 'Company' : 'Compania'}</h4>
             <ul className="space-y-2">
               {navigation.companie.map((item) => (
-                <li key={item.name}>
+                <li key={item.id}>
                   <Link
-                    href={item.href}
+                    href={isEnglish ? item.hrefEn : item.hrefRo}
                     className="text-secondary-300 hover:text-white text-sm transition-colors"
                   >
-                    {item.name}
+                    {getLabel(item)}
                   </Link>
                 </li>
               ))}
@@ -76,7 +108,7 @@ export default function Footer() {
 
           {/* Contact */}
           <div>
-            <h4 className="text-sm font-semibold mb-4">Contact</h4>
+            <h4 className="text-sm font-semibold mb-4">{isEnglish ? 'Contact' : 'Contact'}</h4>
             <ul className="space-y-3">
               <li>
                 <a
@@ -130,10 +162,10 @@ export default function Footer() {
         <div className="container py-6">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <p className="text-secondary-400 text-sm">
-              © {new Date().getFullYear()} Centrala Termică Service. Toate drepturile rezervate.
+              © {new Date().getFullYear()} Centrala Termică Service. {isEnglish ? 'All rights reserved.' : 'Toate drepturile rezervate.'}
             </p>
             <p className="text-secondary-400 text-sm mt-2 md:mt-0">
-              Autorizați și certificați. Servicii în București și Ilfov.
+              {isEnglish ? 'Authorized and certified. Services in Bucharest and Ilfov.' : 'Autorizați și certificați. Servicii în București și Ilfov.'}
             </p>
           </div>
         </div>

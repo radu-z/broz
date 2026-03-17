@@ -5,7 +5,7 @@ description: "Oferim reparații, întreținere preventivă, instalări și consu
 
 ## Serviciile Noastre de Încredere
 
-### 1. Reparații de Urgență
+### 1. Reparații de Urgență {#urgenta}
 
 Când centrala termică face probleme, noi suntem aici pentru tine!
 
@@ -23,7 +23,7 @@ Când centrala termică face probleme, noi suntem aici pentru tine!
 - Perziuni de apă
 - Presiune scăzută
 
-### 2. Întreținere Preventivă
+### 2. Întreținere Preventivă {#intretinere}
 
 Prevenirea este cheia pentru o centrală eficientă și durabilă!
 
@@ -41,7 +41,7 @@ Prevenirea este cheia pentru o centrală eficientă și durabilă!
 - Siguranță familială sporită
 - Menținerea garanției producătorului
 
-### 3. Instalare și Înlocuire
+### 3. Instalare și Înlocuire {#instalare}
 
 Sisteme noi sau modernizarea celor existente.
 
@@ -58,7 +58,7 @@ Sisteme noi sau modernizarea celor existente.
 - Modernizarea sistemului existent
 - Extinderea sistemului de încălzire
 
-### 4. Consultanță Tehnică
+### 4. Consultanță Tehnică {#consultanta}
 
 Expertiză profesională pentru decizii informate.
 
