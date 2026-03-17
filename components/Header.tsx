@@ -60,6 +60,9 @@ export default function Header() {
     return isEnglish ? item.labelEn : item.labelRo
   }
 
+  // Logo path - works with basePath
+  const logoPath = process.env.NODE_ENV === 'production' ? '/broz/logo-broz.png' : '/logo-broz.png'
+
   if (!mounted) {
     return (
       <header className="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-50">
@@ -85,7 +88,7 @@ export default function Header() {
           <Link href={isEnglish ? '/en/' : '/'} className="flex items-center space-x-4">
             <div className="relative h-16 w-16 overflow-hidden rounded">
               <img
-                src="/logo-broz.png"
+                src="/broz/logo-broz.png"
                 alt="Centrala Termică Service"
                 width={64}
                 height={64}
