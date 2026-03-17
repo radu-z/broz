@@ -4,6 +4,9 @@ const nextConfig = {
   output: 'export',
   trailingSlash: true,
   basePath: process.env.NODE_ENV === 'production' ? '/broz' : '',
+  images: {
+    unoptimized: true,
+  },
 }
 
 module.exports = nextConfig
