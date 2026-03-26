@@ -18,5 +18,6 @@ description: "Listă cu cele mai populare modele și branduri de pompe de căldu
 - Nibe
 - Gree
 - Atlantic
+- Ferrari
 
 Aceste branduri oferă modele eficiente și fiabile pentru climatizarea şi încălzirea locuinței sau spațiului tău industrial.
