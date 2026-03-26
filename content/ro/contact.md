@@ -24,7 +24,7 @@ Suntem aici pentru a te ajuta cu orice nevoă ai legată de centrala termică. C
 (Primești răspuns rapid în timpul programului)
 
 **Telefon urgențe:**  
-🚨 **0722 999 888**  
+🚨 **0722 999 777**  
 (Doar pentru defecțiuni grave, în afara programului)
 
 **Email:**  

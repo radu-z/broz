@@ -75,9 +75,9 @@ function parseRoute(segments?: string[]) {
 export async function generateStaticParams(): Promise<Params[]> {
   const params: Params[] = []
 
-  // Romanian root: /
-  params.push({ segments: [] })
-  // English root: /en
+  // Romanian root: / -> catch-all gets zero segments -> undefined
+  params.push({ segments: undefined })
+  // English root: /en -> catch-all gets one segment: 'en'
   params.push({ segments: ['en'] })
 
   const [roPages, enPages] = await Promise.all([getAllMarkdown('ro'), getAllMarkdown('en')])
@@ -91,9 +91,6 @@ export async function generateStaticParams(): Promise<Params[]> {
     if (!page.slug || page.slug === 'index') continue
     params.push({ segments: ['en', ...page.slug.split('/')] })
   }
-
-  // Satisfy optional catch-all for static export
-  params.push({ segments: undefined })
 
   return params
 }
