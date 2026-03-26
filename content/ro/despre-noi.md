@@ -36,6 +36,6 @@ Ne specializăm în:
 3. **Instalări și Înlocuiri** - soluții moderne pentru confort
 4. **Consultanță Tehnică** - audituri și recomandări
 
-### Zona de Acoperire
+### Zona de Acoperire 2
 
 Acoperim **întreg București** și **județul Ilfov**, oferind servicii de calitate la domiciliul clienților noștri. Programăm intervenții Rapid, în funcție de disponibilitatea ta.
