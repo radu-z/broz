@@ -21,8 +21,8 @@ const navigation: NavItem[] = [
 ]
 
 const languages = [
-  { code: 'ro', name: 'Română', flag: '🇷🇴' },
-  { code: 'en', name: 'English', flag: '🇬🇧' },
+  { code: 'ro', name: 'Română', flag: '/flags/ro.svg' },
+  { code: 'en', name: 'English', flag: '/flags/en.svg' },
 ]
 
 export default function Header() {
@@ -132,7 +132,7 @@ export default function Header() {
                 onClick={() => setLangMenuOpen(!langMenuOpen)}
                 aria-expanded={langMenuOpen}
               >
-                <span className="text-lg">{currentLanguage.flag}</span>
+                <img src={currentLanguage.flag} alt="" className="w-5 h-4 object-contain" />
                 <span>{currentLanguage.name}</span>
                 <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
@@ -146,15 +146,15 @@ export default function Header() {
                  .map((lang) => {
                    const newPath = getLocalizedPath(lang.code === 'en' ? 'en' : 'ro')
                    return (
-                     <Link
-                       key={lang.code}
-                       href={newPath}
-                       className="flex items-center space-x-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
-                       onClick={() => setLangMenuOpen(false)}
-                     >
-                       <span className="text-lg">{lang.flag}</span>
-                       <span>{lang.name}</span>
-                     </Link>
+                      <Link
+                        key={lang.code}
+                        href={newPath}
+                        className="flex items-center space-x-2 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors"
+                        onClick={() => setLangMenuOpen(false)}
+                      >
+                        <img src={lang.flag} alt="" className="w-5 h-4 object-contain" />
+                        <span>{lang.name}</span>
+                      </Link>
                    )
                  })}
                 </div>
@@ -193,25 +193,25 @@ export default function Header() {
                 <p className="text-sm font-medium text-gray-500 mb-2">
                   {currentLang === 'ro' ? 'Limba / Language' : 'Language'}
                 </p>
-                <div className="flex space-x-2">
-                 {languages.map((lang) => {
-                   const newPath = getLocalizedPath(lang.code === 'en' ? 'en' : 'ro')
-                   return (
-                     <Link
-                       key={lang.code}
-                       href={newPath}
-                       className={`flex items-center space-x-1 px-3 py-2 rounded-md text-sm ${
-                         lang.code === currentLang
-                           ? 'bg-primary-50 text-primary-700'
-                           : 'text-gray-700 hover:bg-gray-50'
-                       }`}
-                       onClick={() => setLangMenuOpen(false)}
-                     >
-                       <span>{lang.flag}</span>
-                       <span>{lang.name}</span>
-                     </Link>
-                   )
-                 })}
+                 <div className="flex space-x-2">
+                  {languages.map((lang) => {
+                    const newPath = getLocalizedPath(lang.code === 'en' ? 'en' : 'ro')
+                    return (
+                      <Link
+                        key={lang.code}
+                        href={newPath}
+                        className={`flex items-center space-x-1 px-3 py-2 rounded-md text-sm ${
+                          lang.code === currentLang
+                            ? 'bg-primary-50 text-primary-700'
+                            : 'text-gray-700 hover:bg-gray-50'
+                        }`}
+                        onClick={() => setLangMenuOpen(false)}
+                      >
+                        <img src={lang.flag} alt="" className="w-5 h-4 object-contain" />
+                        <span>{lang.name}</span>
+                      </Link>
+                    )
+                  })}
                 </div>
               </div>
               

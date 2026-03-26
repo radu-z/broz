@@ -34,7 +34,7 @@ const config: Config = {
         }
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
+        sans: ['Inter', 'system-ui', 'Apple Color Emoji', 'Noto Color Emoji', 'Segoe UI Emoji', 'sans-serif'],
       },
     },
   },

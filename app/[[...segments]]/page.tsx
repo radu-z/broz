@@ -75,8 +75,8 @@ function parseRoute(segments?: string[]) {
 export async function generateStaticParams(): Promise<Params[]> {
   const params: Params[] = []
 
-  // Romanian root: / -> catch-all gets zero segments -> undefined
-  params.push({ segments: undefined })
+  // Romanian root: / -> catch-all gets zero segments -> empty array
+  params.push({ segments: [] })
   // English root: /en -> catch-all gets one segment: 'en'
   params.push({ segments: ['en'] })
 

@@ -2,7 +2,7 @@
 @plugin "@tailwindcss/typography";
 
 @theme {
-  --font-sans: Inter, system-ui, sans-serif;
+  --font-sans: 'Inter', system-ui, 'Apple Color Emoji', 'Noto Color Emoji', 'Segoe UI Emoji', sans-serif;
   
   --color-primary-50: #e6f0ff;
   --color-primary-100: #cce0ff;
